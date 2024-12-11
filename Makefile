@@ -1,24 +1,17 @@
-FLAGS = -Wall
+FLAGS = -Wall -pthread
 
 all: lab3
 
-# Regla para srep
-funciones: funciones.o funciones.o
-	gcc $(FLAGS) -o funciones funciones.o funciones.o
+# Regla para generar el ejecutable lab3
+lab3: lab3.o funciones.o
+	gcc $(FLAGS) -o lab3 lab3.o funciones.o
 
 funciones.o: funciones.c funciones.h
 	gcc $(FLAGS) -c funciones.c
 
-funciones.o: funciones.c funciones.h
-	gcc $(FLAGS) -c funciones.c
-
-# Regla para lab3
-lab3: lab3.o
-	gcc $(FLAGS) -o lab3 lab3.o
-
-lab3.o: lab3.c
+lab3.o: lab3.c funciones.h
 	gcc $(FLAGS) -c lab3.c
 
 # Limpiar archivos generados
-clear:
+clean:
 	rm -f lab3 *.o
