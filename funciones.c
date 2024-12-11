@@ -82,6 +82,10 @@ void guardar_en_archivo(char *nombreArchivo, int* arreglo, int largo){
 
 // Función que ejecuta cada hebra
 void* funcion(void* arg) {
+    // Si todos los elementos del arreglo son iguales, salir
+    if(iguales(A, cantidad_numeros)){
+        return NULL;
+    }
     // Extraer la posición y liberar memoria
     int posicion = *(int*)arg;
     free(arg);
@@ -103,7 +107,7 @@ void* funcion(void* arg) {
 
     // Imprimir por pantalla para hacer "debug"
     if (debug != NULL) {
-        printf("Contenido del arreglo:[");
+        printf("Contenido del arreglo: [ ");
         for (int i = 0; i < cantidad_numeros; i++) {
             printf("%d ", A[i]);
         }

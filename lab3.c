@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
         for(int i=0;i<cantidad_numeros;i++){
             int* posicion = malloc(sizeof(int)); // Reservar memoria para el número
             *posicion = i;
-
+            
             pthread_create(&tids[i], NULL, funcion, posicion);   //
         }
         
