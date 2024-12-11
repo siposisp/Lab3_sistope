@@ -92,20 +92,23 @@ void* funcion(void* arg) {
     int posicion = *(int*)arg;
     free(arg);
 
-    // Actualizar el valor en el arreglo global
-    pthread_mutex_lock(&lock); // Bloquear el acceso al recurso compartido para evitar condicion de carrera
-    if (A[posicion] < A[posicion + 1]) {
-        A[posicion] = A[posicion + 1]; // Asignar el mayor valor
+    // Calcular la posición anterior considerando la circularidad
+    int posicion_anterior;
+    if (posicion == 0) {
+        posicion_anterior = cantidad_numeros - 1;
+    } else {
+        posicion_anterior = posicion - 1;
     }
 
-    if(posicion == cantidad_numeros-1){
-        if(A[posicion] < A[0]){
-            A[posicion] = A[0];
-        }
+    // Actualizar el valor en el arreglo global
+    pthread_mutex_lock(&lock); // Bloquear el acceso al recurso compartido para evitar condición de carrera
+    int myval = A[posicion];   //valor inicial A[i]
+    if (myval < A[posicion_anterior]) {
+        A[posicion] = A[posicion_anterior]; // Asignar el mayor valor
     }
 
     // Imprimir por pantalla para hacer "debug"
-    if (strcmp(debug, "debug") == 0) {
+    if (debug != NULL) {
         printf("Contenido del arreglo:[");
         for (int i = 0; i < cantidad_numeros; i++) {
             printf("%d ", A[i]);
@@ -117,6 +120,7 @@ void* funcion(void* arg) {
 
     return NULL;
 }
+
 
 
 // Funcion que verifica si todos los elementos dentro de un arreglo son iguales
@@ -148,7 +152,7 @@ int main(int argc, char *argv[])
     int option;
     char *archivoentrada = NULL;
     char *archivosalida = NULL;
-    debug = NULL;
+    debug = NULL;               // Se setea por defecto NULL para el caso en donde no se quiere hacer "debug"
 
     //Se utiliza geopt para leer las opciones de línea de comandos
     while ((option = getopt(argc, argv, "i:o:D")) != -1) {
@@ -195,12 +199,8 @@ int main(int argc, char *argv[])
         for(int i=0;i<cantidad_numeros;i++){
             int* posicion = malloc(sizeof(int)); // Reservar memoria para el número
             *posicion = i;
-            //printf("i: %d, contenido arreglo: %d\n", i, A[i]);
 
-            pthread_create(&tids[i], NULL, funcion, posicion);
-            //if(iguales(A, cantidad_numeros) && i == cantidad_numeros - 1){
-            //    i = 0;
-            //}
+            pthread_create(&tids[i], NULL, funcion, posicion);   //
         }
         
         //Esperar a que terminen las hebras
@@ -220,6 +220,8 @@ int main(int argc, char *argv[])
     
     free(A);
     pthread_mutex_destroy(&lock);
+
+    printf("debug: %s", debug);
 
     printf("\n*****************FIN DEL PROGRAMA*****************\n");
     return 0;
