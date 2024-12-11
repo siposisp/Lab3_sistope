@@ -220,9 +220,7 @@ int main(int argc, char *argv[])
     
     free(A);
     pthread_mutex_destroy(&lock);
-
-    printf("debug: %s", debug);
-
+    
     printf("\n*****************FIN DEL PROGRAMA*****************\n");
     return 0;
 }
