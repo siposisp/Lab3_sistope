@@ -20,7 +20,7 @@ Cómo ejecutar este proyecto
 
 <h3>Primer Programa archivo lab3.c</h3>
 
-       -i: es el archivo de entrada 
+       -i: es el archivo de entrada con los valores
        
        -o: es el archivo de salida
        
