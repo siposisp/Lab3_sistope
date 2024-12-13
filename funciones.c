@@ -5,7 +5,9 @@ int* A = NULL;               // Arreglo global que contiene los números
 int cantidad_numeros = 0;    // Número de elementos en el arreglo
 char* debug = NULL;          // Variable de control para el debug
 
-// Función para llenar un arreglo con los números del archivo.
+// Entradas: Recibe un char* correspondiente al nombre del archivo y un entero (int) "size" que indica el tamaño del arreglo.
+// Salida: Retorna un puntero a un arreglo de enteros con los datos leidos del archivo.
+// Descripción: Llena un arreglo con los numeros obtenidos de un archivo de texto.
 int* readFileToArray(char* filename, int size) {
     FILE* file = fopen(filename, "r");
     if (!file) {
@@ -43,7 +45,9 @@ void vaciar_archivo(char *nombreArchivo){
     fclose(archivo);
 }
 
-// Cuenta cuántos números hay en el archivo
+// Entradas: Recibe un char* correspondiente al nombre del archivo.
+// Salida: Retorna un entero que indica la cantidad de numeros en el archivo.
+// Descripción: Cuenta cuántos números hay en el archivo.
 int largo_arreglo(char* filename) {
     FILE* file = fopen(filename, "r");
     if (!file) {
@@ -60,7 +64,9 @@ int largo_arreglo(char* filename) {
     return tamano;
 }
 
-
+// Entradas: Recibe un char* correspondiente al nombre del archivo, un puntero a un arreglo de enteros y su largo.
+// Salida: No retorna nada.
+// Descripción: Guarda los elementos de un arreglo en un archivo, añadiendolos como nuevas lineas.
 void guardar_en_archivo(char *nombreArchivo, int* arreglo, int largo){
     FILE *archivo = fopen(nombreArchivo, "a");
 
@@ -78,9 +84,9 @@ void guardar_en_archivo(char *nombreArchivo, int* arreglo, int largo){
     fclose(archivo);
 }
 
-
-
-// Función que ejecuta cada hebra
+// Entradas: Recibe un puntero genérico "arg" (void) que corresponde a la posicion del elemento del arreglo que sera procesado.
+// Salida: Retorna NULL.
+// Descripción: Procesa una posicion del arreglo global "A" para actualizar su valor con base en su posición anterior.
 void* funcion(void* arg) {
     // Si todos los elementos del arreglo son iguales, salir
     if(iguales(A, cantidad_numeros)){
@@ -119,9 +125,9 @@ void* funcion(void* arg) {
     return NULL;
 }
 
-
-
-// Funcion que verifica si todos los elementos dentro de un arreglo son iguales
+// Entradas: Recibe un arreglo de enteros y su tamaño (int).
+// Salida: Retorna 1 si todos los elementos del arreglo son iguales, en caso de no ser iguales retornara 0.
+// Descripción: Verifica si todos los elementos dentro de un arreglo son iguales.
 int iguales(int arreglo[], int tamano) {
     // Si el tamaño es 0 o 1, consideramos que todos son iguales
     if (tamano <= 1) {
