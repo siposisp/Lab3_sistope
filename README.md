@@ -1,4 +1,4 @@
-<h1>Sistemas Operativos: Laboratorio 3</h1>
+<h1>Sistemas Operativos: Laboratorio 3 (Nota 7)</h1>
 
 Este repositorio contiene el tercer laboratorio del curso de Sistemas Operativos, principalmente enfocado en el manejo de hebras utilizando el sistema operativo Linux.
 
